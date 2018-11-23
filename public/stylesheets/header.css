@@ -69,7 +69,10 @@
     width: 180px;
     font-family: Acme;
     font-size: 20px;
+    color: aliceblue;
+    text-decoration: none;
 }
+
 
 .bg-slot-green
 {
@@ -102,4 +105,10 @@
 #hd-footer p {
     font-family: Acme;
     font-size: 22px;
+}
+
+#hd-footer a {
+    text-decoration: none;
+    color: aliceblue;
+    font-family: Acme;
 }

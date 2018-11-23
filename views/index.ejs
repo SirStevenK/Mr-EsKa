@@ -14,11 +14,9 @@
         <section id="main">
             <%- include ../partials/header -%>
             <div id="content">
-                <a class="card" href="/articles/fzza">
-                    <img class="card-image" src="/images/phaser.jpg">
-                    <div class="card-title"><h3>Initiation à Phaser 3</h3></div>
-                    <div class="card-desc"><p>Vous voulez créer un jeu vidéo mais vous ne savez pas quel moteur utiliser ?</p><p>Nous vous avons fait un guide d'iniatiation à Phaser 3</p></div>
-                </a>
+                <% for ( let i = 0; i < articles.length; i++) { %>
+                    <%- include('../partials/card', {url: articles[i].url, image: articles[i].image, title: articles[i].title, description: articles[i].description}); %>
+                <% } %>
             </div>
         </section>
     </body>

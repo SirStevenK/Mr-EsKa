@@ -3,19 +3,11 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var ejs = require('ejs')
 
-var articleSchema = mongoose.Schema({
-    title: String,
-    description: String,
-    type: String,
-    url: String,
-    image: String,
-    content: String
-});
 // utilisateurSchema.methods.hello = function() {
 //     console.log("Bonjour, je m'appelle " +this.nom + " !");
 // };
 
-var Article = mongoose.model('articles', articleSchema);
+var Article = require('../models/article_model')
 var articles = []
 
 // 2- Opérations sur les données
@@ -37,7 +29,7 @@ router.get('/[a-zA-Z0-9-]+/', function(req, res, next) {
     let articleToPrint = -1;
     for (let article of articles)
     {
-        if ( req.url.substring(1).toLowerCase() == article.url) {
+        if ("articles" + req.url.toLowerCase() == article.url) {
             articleToPrint = article;
             break;
         }
