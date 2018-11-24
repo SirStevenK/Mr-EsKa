@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Page Title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Acme|Oswald" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/admin.css" />
+    </head>
+    <body>
+        <section id="login">
+            <form action="/admin" method="POST">
+                <div class="text-input">
+                    <label for="user">Pseudo</label>
+                    <input type="text" name="user" required>
+                </div>
+                <div class="text-input">
+                    <label for="pwd">Mot de passe</label>
+                    <input type="password" name="pwd" required>
+                </div>
+                <div>
+                    <input class="button-input bg-bi-green" type="submit" value="Se Connecter">
+                </div>
+            </form>
+        </section>
+    </body>
+</html>
