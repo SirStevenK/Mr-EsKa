@@ -8,8 +8,10 @@ var fs = require('fs');
 
 var Utilisateur = require('../models/user_model')
 var Image = require("../models/image_model");
+var Image = require("../models/article_model");
 var list_users = []
 var list_images = []
+var list_articles = []
 
 var db = mongoose.connection;
 
@@ -99,6 +101,58 @@ router.get('/menu', function(req, res, next) {
     else res.redirect('/admin');
 });
 
+router.get('/postArticle', function(req, res, next) {
+    if (req.session.user)
+    {
+        currentUser = req.session.user;
+        let stop = false;
+        list_users.forEach((user) => {
+            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+            {
+                req.session.user = user;
+                res.render('admin/postArticle');
+                stop = true;
+            }
+        });
+        if (!stop) {
+            res.redirect('/admin');
+        }
+    }
+    else res.redirect('/admin');
+});
+
+router.post('/postArticle', function(req, res)
+{    
+    console.log(req.body)
+    const title = req.body.Title;
+    const url = req.body.UrlArticle;
+    const image = req.body.ImagePrincipale;
+    const description = req.body.DescriptionPrincipale;
+    const type = req.body.Type;
+    const content = req.body.Contenu;
+
+    if(title == "" || content == "" || url == "" || image == "" || description == "" || type == ""){
+    //    res.render('admin/postImage', {script: 'alert("Le nom de l\'image est déjà pris");'});
+        res.render('admin/postArticle');
+    } 
+    else 
+    {
+        let newArticle = new Image({
+            title: title,
+            description: description,
+            type: type,
+            url: url,
+            image: image,
+            content: content,
+            date: new Date
+        });
+        newArticle.save(function(err, user) {
+            if (err) return res.json(err);
+            res.render('admin/postArticle');
+        });
+    }
+});
+
 router.get('/postImage', function(req, res, next) {
     if (req.session.user)
     {
@@ -108,12 +162,11 @@ router.get('/postImage', function(req, res, next) {
             if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
             {
                 req.session.user = user;
-                res.render('admin/postImage');
+                res.render('admin/postImage', {script: ""});
                 stop = true;
             }
         });
         if (!stop) {
-            console.log("oui")
             res.redirect('/admin');
         }
     }
@@ -124,22 +177,17 @@ router.post('/postImage', upload.single('image'), function(req, res, next){
     
     const file = req.file;
     const name = req.body.name;
-    if(!file){
-       res.render('admin/postImage');
+    if(!file || !list_images.includes(name)){
+       res.render('admin/postImage', {script: 'alert("Le nom de l\'image est déjà pris");'});
     } 
     else 
     {
-        console.log(file);
-        console.log(name);
-        console.log(list_users);
-        console.log(list_images);
-        
         fs.rename(file.path, __dirname + "/../public/images/" + name, function (err) {
             if (err) throw err;
             let newImage = new Image({ name: name, url: '/images/' + name });
             newImage.save(function(err, user) {
                 if (err) return res.json(err);
-                res.send('User ' + user.name + ' successfully created!');
+                res.render('admin/postImage', {script: "alert('User " + user.name + " successfully created!');"});
             });
             // res.send('renamed complete');
         });

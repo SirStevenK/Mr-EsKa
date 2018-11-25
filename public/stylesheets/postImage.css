@@ -73,8 +73,9 @@ body
 {
     font-weight: bold;
     cursor: pointer;
-    color: red;
-    text-align: center;
+    color: white;
+    width: 200px;
+    margin: 0 auto;
 }
 
 .label-file:hover
@@ -115,7 +116,7 @@ body
     margin: 20px 0;
     font-size: 24px;
     padding: 10px 20px;
-    border: 1px solid #666666;
+    border: 1px solid #BBB;
     border-radius: 20px;
     font-family: Oswald;
 }
@@ -134,6 +135,7 @@ body
     border-radius: 10px;
     font-family: Acme;
     outline-width: 0;
+    font-weight: bold;
 }
 
 .bg-bi-green

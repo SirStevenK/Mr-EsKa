@@ -4,14 +4,14 @@ var mongoose = require('mongoose');
 var ejs = require('ejs')
 
 var Article = require('../models/article_model')
-var articles = []
 
 // 2- Opérations sur les données
 var db = mongoose.connection;
-db.once('open', function() {
+
+router.get('/', function(req, res, next) {
     Article.find((err, Articles) => {
         if (!err) {
-            articles = Articles.reverse();
+            res.render('index', {articles: Articles.reverse()});
         }
         else {
             return console.error(err);
@@ -20,24 +20,52 @@ db.once('open', function() {
     });
 });
 
-router.get('/', function(req, res, next) {
-    res.render('index', {articles: articles});
-});
-
 router.get('/tutoriels', function(req, res, next) {
-  res.render('index', {articles: articles.filter((e) => e.type == "Tutoriel")});
+    Article.find((err, Articles) => {
+        if (!err) {
+            res.render('index', {articles: Articles.reverse()});
+        }
+        else {
+            return console.error(err);
+        }
+        // mongoose.disconnect();
+    });
 });
 
 router.get('/developpement-jv', function(req, res, next) {
-  res.render('index', {articles: articles.filter((e) => e.type == "Developpement JV")});
+    Article.find((err, Articles) => {
+        if (!err) {
+            res.render('index', {articles: Articles.reverse()});
+        }
+        else {
+            return console.error(err);
+        }
+        // mongoose.disconnect();
+    });
 });
 
 router.get('/analyse-jv', function(req, res, next) {
-  res.render('index', {articles: articles.filter((e) => e.type == "Analyse JV")});
+    Article.find((err, Articles) => {
+        if (!err) {
+            res.render('index', {articles: Articles.reverse()});
+        }
+        else {
+            return console.error(err);
+        }
+        // mongoose.disconnect();
+    });
 });
 
 router.get('/mes-creations', function(req, res, next) {
-  res.render('index', {articles: articles.filter((e) => e.type == "Mes Creations")});
+    Article.find((err, Articles) => {
+        if (!err) {
+            res.render('index', {articles: Articles.reverse()});
+        }
+        else {
+            return console.error(err);
+        }
+        // mongoose.disconnect();
+    });
 });
 
 mongoose.connect('mongodb://localhost/test');

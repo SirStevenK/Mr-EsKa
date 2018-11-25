@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Page Title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Acme|Permanent+Marker" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Acme|Oswald|Permanent+Marker" rel="stylesheet">
         <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/postImage.css" />
         <!-- <script src="main.js"></script> -->
     </head>
@@ -13,11 +13,11 @@
         <section id="main">
             <div id="pi-top">
                 <a href="/admin/menu" style="grid-column: 1;"><img src="/images/backicon.png"></a>
-                <p id="title" style="font-family: Acme; font-size: 24px;grid-column: 2/3;align-self: center;">Envoi d'images</p>
+                <p id="title" style="font-family: Permanent Marker; font-size: 24px;grid-column: 2/3;align-self: center;">Envoi d'images</p>
             </div>
             <form action="/admin/postImage" enctype="multipart/form-data" method="POST" class="form">
                 <input id="name" name="name" type="text" placeholder="Entrez le nom de l'image">
-                <label for="file" class="label-file">Choix image</label>
+                <label for="file" class="label-file button-input bg-bi-blue">Choisir l'image</label>
                 <input id="file" name="image" class="input-file" type="file" accept="image/*" onchange="loadFile(event)">
                 <img id="output"/>
                 <input class="button-input bg-bi-green" type="submit" value="Envoyer">
@@ -26,9 +26,10 @@
     </body>
 </html>
 <script>
-  var loadFile = function(event) {
-    var output = document.getElementById('output');
-    document.getElementById("name").value = event.target.files[0].name;
-    output.src = URL.createObjectURL(event.target.files[0]);
-  };
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        document.getElementById("name").value = event.target.files[0].name;
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+    <%- script -%>
 </script>

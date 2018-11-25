@@ -35,6 +35,7 @@ body
     border: 3px solid;
     border-radius: 10px;
     font-family: Acme;
+    outline-width: 0;
 }
 
 .bg-bi-green
@@ -62,7 +63,7 @@ body
     outline-width: 0;
     font-size: 24px;
     padding: 10px 20px;
-    border: 1px solid #666666;
+    border: 1px solid #BBB;
     border-radius: 20px;
     font-family: Oswald;
 }
