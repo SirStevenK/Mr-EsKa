@@ -8,7 +8,7 @@ var fs = require('fs');
 
 var Utilisateur = require('../models/user_model')
 var Image = require("../models/image_model");
-var Image = require("../models/article_model");
+var Article = require("../models/article_model");
 var list_users = []
 var list_images = []
 var list_articles = []
@@ -25,9 +25,6 @@ db.once('open', function() {
         }
     });
 });
-
-db.on('error', console.error.bind(console, 'connection error:'));
-
 
 db.once('open', function() {
     Image.find((err, Images) => {
@@ -137,7 +134,7 @@ router.post('/postArticle', function(req, res)
     } 
     else 
     {
-        let newArticle = new Image({
+        let newArticle = new Article({
             title: title,
             description: description,
             type: type,
@@ -148,7 +145,7 @@ router.post('/postArticle', function(req, res)
         });
         newArticle.save(function(err, user) {
             if (err) return res.json(err);
-            res.render('admin/postArticle');
+            res.redirect('/');
         });
     }
 });
@@ -177,7 +174,8 @@ router.post('/postImage', upload.single('image'), function(req, res, next){
     
     const file = req.file;
     const name = req.body.name;
-    if(!file || !list_images.includes(name)){
+    if(!file){
+        // || !list_images.includes(name)
        res.render('admin/postImage', {script: 'alert("Le nom de l\'image est déjà pris");'});
     } 
     else 
@@ -187,7 +185,7 @@ router.post('/postImage', upload.single('image'), function(req, res, next){
             let newImage = new Image({ name: name, url: '/images/' + name });
             newImage.save(function(err, user) {
                 if (err) return res.json(err);
-                res.render('admin/postImage', {script: "alert('User " + user.name + " successfully created!');"});
+                res.render('admin/postImage', {script: 'alert("L\'image ' + name + ' a bien été créée !");'});
             });
             // res.send('renamed complete');
         });

@@ -12,13 +12,14 @@ var Article = require('../models/article_model')
 var db = mongoose.connection;
 
 /* GET users listing. */
-router.get('/[a-zA-Z0-9-]+/', function(req, res, next) {
+router.get('/[a-zA-Z0-9-]+\/?/', function(req, res, next) {
     let articleToPrint = -1;
     Article.find((err, Articles) => {
         if (!err) {
             for (let article of Articles)
             {
-                if ("articles" + req.url.toLowerCase() == article.url) {
+                if ("articles" + req.url.toLowerCase() == article.url || "articles" + req.url.toLowerCase() == article.url + "/") 
+                {
                     articleToPrint = article;
                     break;
                 }
