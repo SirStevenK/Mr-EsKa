@@ -19,19 +19,19 @@
                 <label for="Type">Type</label>
                 <div class="radio-input">
                     <div class="element">
-                        <input id="tutoriel" type="radio" name="Type" value="Tutoriel" form="send">
+                        <input id="tutoriel" type="radio" name="Type" value="Tutoriel" checked="checked">
                         <label for="tutoriel">Tutoriel</label>
                     </div>
                     <div class="element">
-                        <input id="devjv" type="radio" name="Type" value="Developpement JV" form="send">
+                        <input id="devjv" type="radio" name="Type" value="Developpement JV">
                         <label for="devjv">Développement JV</label>
                     </div>
                     <div class="element">
-                        <input id="anajv" type="radio" name="Type" value="Analyse JV" form="send">
+                        <input id="anajv" type="radio" name="Type" value="Analyse JV">
                         <label for="anajv">Analyse JV</label>
                     </div>
                     <div class="element">
-                        <input id="mycre" type="radio" name="Type" value="Mes Creations" form="send">
+                        <input id="mycre" type="radio" name="Type" value="Mes Creations">
                         <label for="mycre">Mes Créations</label>
                     </div>
                 </div>
@@ -39,19 +39,19 @@
      
             <div class="text-input">
                 <label for="title">Titre</label>
-                <input id="titre" type="text" name="Title" form="send" value="<%= title %>" required>
+                <input id="titre" type="text" name="Title" form="send" required>
             </div>
             <div class="text-input">
                 <label for="UrlArticle">Url de l'article</label>
-                <input id="url" type="text" name="UrlArticle" value="<%= url %>" form="send" required>
+                <input id="url" type="text" name="UrlArticle" value="articles/" form="send" required>
             </div>
             <div class="text-input">
                 <label for="ImagePrincipale">Lien Image</label>
-                <input id="image" type="text" name="ImagePrincipale" value="<%= image %>" form="send" required>
+                <input id="image" type="text" name="ImagePrincipale" form="send" required>
             </div>
             <div class="text-input">
                 <label for="DescriptionPrincipale">Description</label>
-                <textarea id="description" type="text" name="DescriptionPrincipale" form="send" required><%= description %></textarea>
+                <textarea id="description" type="text" name="DescriptionPrincipale" form="send" required></textarea>
             </div>
             <input class="button-input bg-bi-green" type="button" value="Continuer" onclick="toggleEdit()">
         </section>
@@ -72,11 +72,11 @@
             </div>
 
             <!-- Zone de rédaction -->
-            <textarea id="contenu" name="Contenu" cols="100" rows="40" form="send"><%= content %></textarea>
+            <textarea id="contenu" name="Contenu" cols="100" rows="40" form="send"></textarea>
             
     
             <!-- Envoie -->
-            <form action="<%= action %>" method="POST" id="send">
+            <form action="/admin/postArticle" method="POST" id="send">
                 <input class="button-input bg-bi-green" type="submit" value="Envoyer">
             </form>
         </section>
@@ -94,13 +94,3 @@
         <script src="/javascripts/editor.js"></script>
     </body>
 </html>
-<script>
-    let type = "<%= type %>";
-    if (type == "") document.getElementById("tutoriel").checked = "checked";
-    else {
-        if (type == "Tutoriel") document.getElementById("tutoriel").checked = "checked";
-        if (type == "Developpement JV") document.getElementById("devjv").checked = "checked";
-        if (type == "Analyse JV") document.getElementById("anajv").checked = "checked";
-        if (type == "Mes Creations") document.getElementById("mycre").checked = "checked";
-    }
-</script>

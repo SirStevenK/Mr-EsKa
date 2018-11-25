@@ -107,7 +107,7 @@ router.get('/postArticle', function(req, res, next) {
             if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
             {
                 req.session.user = user;
-                res.render('admin/postArticle');
+                res.render("admin/postArticle", {title: "", type: "", description: "", url: "articles/", image: "", content: "", action: "/admin/postArticle"} );
                 stop = true;
             }
         });
@@ -128,9 +128,9 @@ router.post('/postArticle', function(req, res)
     const type = req.body.Type;
     const content = req.body.Contenu;
 
-    if(title == "" || content == "" || url == "" || image == "" || description == "" || type == ""){
+    if(title == "" || content == "" || url == "articles/" || image == "" || description == "" || type == ""){
     //    res.render('admin/postImage', {script: 'alert("Le nom de l\'image est déjà pris");'});
-        res.render('admin/postArticle');
+        res.render("admin/postArticle", {title: title, type: type, description: description, url: url, image: image, content: content, action: "/admin/postArticle"} );
     } 
     else 
     {
@@ -192,6 +192,33 @@ router.post('/postImage', upload.single('image'), function(req, res, next){
     }
 });
 
+router.get('/manageArticle', function(req, res, next) {
+    if (req.session.user)
+    {
+        currentUser = req.session.user;
+        let stop = false;
+        list_users.forEach((user) => {
+            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+            {
+                req.session.user = user;
+                Article.find((err, Articles) => {
+                    if (!err) {
+                        res.render('admin/manageArticle', {articles: Articles.reverse()});
+                    }
+                    else {
+                        return console.error(err);
+                    }
+                });
+                stop = true;
+            }
+        });
+        if (!stop) {
+            res.redirect('/admin');
+        }
+    }
+    else res.redirect('/admin');
+});
+
 router.get('/manageImage', function(req, res, next) {
     if (req.session.user)
     {
@@ -238,6 +265,55 @@ router.post('/manageImage', function(req, res)
         fs.unlink(__dirname + "/../public/images/" + url.substring(url.lastIndexOf("/") + 1), (err) => {
             if (err) throw err;
             Image.findOneAndDelete({url : url}, () => {res.redirect("/admin/manageImage")});
+        });
+    }
+});
+
+router.get('/modifArticle', function(req, res) {
+    if (req.session.user)
+    {
+        currentUser = req.session.user;
+        let stop = false;
+        list_users.forEach((user) => {
+            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+            {
+                req.session.user = user;
+                Article.findById(req.query.id, function (err, article) {
+                    if (!err) {
+                        res.render("admin/postArticle", {title: article.title, type: article.type, description: article.description, url: article.url, image: article.image, content: article.content, action: "/admin/modifArticle?id=" + req.query.id} );
+                    }
+                    else return console.log(err);
+                });
+                stop = true;
+            }
+        });
+        if (!stop) {
+            res.redirect('/admin');
+        }
+    }
+    else res.redirect('/admin');
+});
+
+router.post('/modifArticle', function(req, res)
+{    
+    console.log(req.body)
+    const title = req.body.Title;
+    const url = req.body.UrlArticle;
+    const image = req.body.ImagePrincipale;
+    const description = req.body.DescriptionPrincipale;
+    const type = req.body.Type;
+    const content = req.body.Contenu;
+
+    if(title == "" || content == "" || url == "articles/" || image == "" || description == "" || type == ""){
+        res.render("admin/postArticle", {title: title, type: type, description: description, url: url, image: image, content: content, action: "/admin/modifArticle?id=" + req.query.id} );
+    } 
+    else 
+    {
+        Article.findByIdAndUpdate(req.query.id, {title: title, description: description, type: type, url: url, image: image, content: content}, function (err, article) {
+            if (!err) {
+                res.redirect('/');
+            }
+            else return console.log(err);
         });
     }
 });

@@ -27,16 +27,18 @@ function updateVisualizer() {
     SyntaxHighlighter.highlight()
 }
 
-title.oninput = updateVisualizer;
-image.oninput = updateVisualizer;
-textarea.oninput = updateVisualizer;
-url.oninput = function() {
+function validUrlImage() {
     if (url.value == "articles/") {
         url.style.borderColor = "red";
     }
     else url.style.borderColor = "#BBB";
     url.value = "articles/" + url.value.substring(9);
 }
+
+title.oninput = updateVisualizer;
+image.oninput = updateVisualizer;
+textarea.oninput = updateVisualizer;
+url.oninput = validUrlImage;
 
 function modifSelect(val1, val2) {
     if (textarea.selectionStart != textarea.selectionEnd) textarea.value = textarea.value.substring(0, textarea.selectionStart) + val1 + textarea.value.substring(textarea.selectionStart, textarea.selectionEnd) + val2 + textarea.value.substring(textarea.selectionEnd)
@@ -55,3 +57,6 @@ function toggleEdit() {
         editor.style.display = "flex";
     }
 }
+
+updateVisualizer();
+validUrlImage();

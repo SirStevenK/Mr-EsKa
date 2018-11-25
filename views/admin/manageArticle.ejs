@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Menu Administrateur</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Acme|Oswald|Permanent+Marker" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/manageArticle.css" />
+    </head>
+    <body>
+        <section id="main">
+            <div id="main-top">
+                <a href="/admin/menu" style="cursor: pointer;grid-column: 1;"><img src="/images/backicon.png"></a>
+                <p style="font-family: Permanent Marker; font-size: 24px;justify-self: center;">Gestion des articles</p>
+            </div>
+            <div id="print-articles">
+                <% for ( let i = 0; i < articles.length; i++) { %>
+                    <%- include('../../partials/card', {url: "/admin/modifArticle?id=" + articles[i].id, image: articles[i].image, title: articles[i].title, description: articles[i].description}); %>
+                <% } %>
+            </div>
+        </section>
+    </body>
+</html>
