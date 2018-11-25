@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Menu Administrateur</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Acme|Oswald|Permanent+Marker" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/manageImage.css" />
+    </head>
+    <body>
+        <div id="overview">
+            <div id="ov-top">
+                <a style="cursor: pointer;grid-column: 1;" onclick="overview.style.display = 'none';main.style.display = 'flex';"><img src="/images/backicon.png"></a>
+                <input id="titre" type="text" name="newUrl" style="grid-column: 2/3;" form="send" required>
+            </div>
+            <div id="ov-mid">
+                <img src="/images/logoEsKa.png">
+                <input id="url" type="text" name="url" style="display:none" form="send">
+            </div>
+            <div id="ov-bot">
+                <form action="/admin/manageImage" method="POST" id="send">
+                    <input class="button-input bg-bi-orange" name="request" type="submit" value="Supprimer">
+                    <input class="button-input bg-bi-green" name="request" type="submit" value="Valider">
+                </form>
+            </div>
+        </div>
+        <section id="main">
+            <div id="main-top">
+                <a href="/admin/menu" style="cursor: pointer;grid-column: 1;"><img src="/images/backicon.png"></a>
+                <p style="font-family: Permanent Marker; font-size: 24px;justify-self: center;">Gestion des images</p>
+            </div>
+            <div id="print-images">
+                <% for ( let i = 0; i < images.length; i++) { %>
+                    <%- include('../../partials/image', {url: images[i].url}); %>
+                <% } %>
+            </div>
+        </section>
+        <script type="text/javascript" src="/javascripts/manageImage.js" /></script>
+    </body>
+</html>

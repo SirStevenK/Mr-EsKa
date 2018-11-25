@@ -192,4 +192,54 @@ router.post('/postImage', upload.single('image'), function(req, res, next){
     }
 });
 
+router.get('/manageImage', function(req, res, next) {
+    if (req.session.user)
+    {
+        currentUser = req.session.user;
+        let stop = false;
+        list_users.forEach((user) => {
+            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+            {
+                req.session.user = user;
+                Image.find((err, Images) => {
+                    if (!err) {
+                        // list_images = Images
+                        res.render('admin/manageImage', {images: Images});
+                    }
+                    else {
+                        return console.error(err);
+                    }
+                });
+                stop = true;
+            }
+        });
+        if (!stop) {
+            res.redirect('/admin');
+        }
+    }
+    else res.redirect('/admin');
+});
+
+router.post('/manageImage', function(req, res)
+{    
+    const url = req.body.url;
+    const newUrl = req.body.newUrl;
+    const requete = req.body.request;
+
+    if (requete == "Valider") 
+    {
+        fs.rename(__dirname + "/../public/images/" + url.substring(url.lastIndexOf("/") + 1), __dirname + "/../public/images/" + newUrl.substring(newUrl.lastIndexOf("/") + 1), function (err) {
+            if (err) throw err;
+            Image.findOneAndUpdate({url : url}, {name: newUrl.substring(newUrl.lastIndexOf("/") + 1), url: newUrl}, () => {res.redirect("/admin/manageImage")});
+        });
+    }
+    else
+    {
+        fs.unlink(__dirname + "/../public/images/" + url.substring(url.lastIndexOf("/") + 1), (err) => {
+            if (err) throw err;
+            Image.findOneAndDelete({url : url}, () => {res.redirect("/admin/manageImage")});
+        });
+    }
+});
+
 module.exports = router;
