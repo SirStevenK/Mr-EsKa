@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/tutoriels', function(req, res, next) {
-    Article.find((err, Articles) => {
+    Article.find({type: "Tutoriel"}, (err, Articles) => {
         if (!err) {
             res.render('index', {articles: Articles.reverse()});
         }
@@ -33,7 +33,7 @@ router.get('/tutoriels', function(req, res, next) {
 });
 
 router.get('/developpement-jv', function(req, res, next) {
-    Article.find((err, Articles) => {
+    Article.find({type: "Developpement JV"}, (err, Articles) => {
         if (!err) {
             res.render('index', {articles: Articles.reverse()});
         }
@@ -45,7 +45,7 @@ router.get('/developpement-jv', function(req, res, next) {
 });
 
 router.get('/analyse-jv', function(req, res, next) {
-    Article.find((err, Articles) => {
+    Article.find({type: "Analyse JV"}, (err, Articles) => {
         if (!err) {
             res.render('index', {articles: Articles.reverse()});
         }
@@ -57,7 +57,7 @@ router.get('/analyse-jv', function(req, res, next) {
 });
 
 router.get('/mes-creations', function(req, res, next) {
-    Article.find((err, Articles) => {
+    Article.find({type: "Mes Creations"}, (err, Articles) => {
         if (!err) {
             res.render('index', {articles: Articles.reverse()});
         }

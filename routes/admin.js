@@ -10,8 +10,6 @@ var Utilisateur = require('../models/user_model')
 var Image = require("../models/image_model");
 var Article = require("../models/article_model");
 var list_users = []
-var list_images = []
-var list_articles = []
 
 var db = mongoose.connection;
 
@@ -19,17 +17,6 @@ db.once('open', function() {
     Utilisateur.find((err, Utilisateurs) => {
         if (!err) {
             list_users = Utilisateurs
-        }
-        else {
-            return console.error(err);
-        }
-    });
-});
-
-db.once('open', function() {
-    Image.find((err, Images) => {
-        if (!err) {
-            list_images = Images
         }
         else {
             return console.error(err);
@@ -174,22 +161,32 @@ router.post('/postImage', upload.single('image'), function(req, res, next){
     
     const file = req.file;
     const name = req.body.name;
-    if(!file){
-        // || !list_images.includes(name)
-       res.render('admin/postImage', {script: 'alert("Le nom de l\'image est déjà pris");'});
-    } 
-    else 
-    {
-        fs.rename(file.path, __dirname + "/../public/images/" + name, function (err) {
-            if (err) throw err;
-            let newImage = new Image({ name: name, url: '/images/' + name });
-            newImage.save(function(err, user) {
-                if (err) return res.json(err);
-                res.render('admin/postImage', {script: 'alert("L\'image ' + name + ' a bien été créée !");'});
-            });
-            // res.send('renamed complete');
-        });
-    }
+    
+    Image.find((err, Images) => {
+        if (!err) {
+            if(!file || !Images.every((e) => e.name != name)){
+                res.render('admin/postImage', {script: 'alert("Le nom de l\'image est déjà pris");'});
+             } 
+             else 
+             {
+                 fs.rename(file.path, __dirname + "/../public/images/" + name, function (err) {
+                     if (err) return res.send(err);
+                     else
+                     {
+                        let newImage = new Image({ name: name, url: '/images/' + name });
+                        newImage.save(function(err, user) {
+                            if (err) return res.json(err);
+                            res.render('admin/postImage', {script: 'alert("L\'image ' + name + ' a bien été créée !");'});
+                        });
+                        // res.send('renamed complete');
+                     }
+                 });
+             }
+        }
+        else {
+            return console.error(err);
+        }
+    });
 });
 
 router.get('/manageArticle', function(req, res, next) {
@@ -219,6 +216,19 @@ router.get('/manageArticle', function(req, res, next) {
     else res.redirect('/admin');
 });
 
+router.post('/manageArticle', function(req, res)
+{    
+    const id = req.body.id;
+    Article.findByIdAndDelete(id, (err) => {
+        if (!err) {
+            res.redirect('/admin/manageArticle')
+        }
+        else {
+            return console.error(err);
+        }
+    });
+});
+
 router.get('/manageImage', function(req, res, next) {
     if (req.session.user)
     {
@@ -230,8 +240,7 @@ router.get('/manageImage', function(req, res, next) {
                 req.session.user = user;
                 Image.find((err, Images) => {
                     if (!err) {
-                        // list_images = Images
-                        res.render('admin/manageImage', {images: Images});
+                        res.render('admin/manageImage', {images: Images.reverse(), script: ""});
                     }
                     else {
                         return console.error(err);
@@ -255,16 +264,39 @@ router.post('/manageImage', function(req, res)
 
     if (requete == "Valider") 
     {
-        fs.rename(__dirname + "/../public/images/" + url.substring(url.lastIndexOf("/") + 1), __dirname + "/../public/images/" + newUrl.substring(newUrl.lastIndexOf("/") + 1), function (err) {
-            if (err) throw err;
-            Image.findOneAndUpdate({url : url}, {name: newUrl.substring(newUrl.lastIndexOf("/") + 1), url: newUrl}, () => {res.redirect("/admin/manageImage")});
+        Image.find((err, Images) => {
+            if (!err) {
+                if (Images.every(e => e.url != newUrl))
+                {
+                    fs.rename(__dirname + "/../public/images/" + url.substring(url.lastIndexOf("/") + 1), __dirname + "/../public/images/" + newUrl.substring(newUrl.lastIndexOf("/") + 1), function (err) {
+                        if (err) return res.send(err);
+                        Image.findOneAndUpdate({url : url}, {name: newUrl.substring(newUrl.lastIndexOf("/") + 1), url: newUrl}, () => {
+                            Image.find((err, Images) => {
+                                if (!err) res.render("admin/manageImage", {images: Images.reverse(), script: 'alert("L\'image a bien été modifié");'});
+                                else return console.error(err);
+                            });
+                        });
+                    });
+                }
+                else res.render("admin/manageImage", {images: Images.reverse(), script: 'alert("Le nom de l\'image est déjà pris");'}); 
+            }
+            else {
+                return console.error(err);
+            }
         });
     }
     else
     {
-        fs.unlink(__dirname + "/../public/images/" + url.substring(url.lastIndexOf("/") + 1), (err) => {
-            if (err) throw err;
-            Image.findOneAndDelete({url : url}, () => {res.redirect("/admin/manageImage")});
+        Image.find((err, Images) => {
+            if (!err) {
+                fs.unlink(__dirname + "/../public/images/" + url.substring(url.lastIndexOf("/") + 1), (err) => {
+                    if (err) return res.send(err);
+                    Image.findOneAndDelete({url : url}, () => {res.redirect('/admin/manageImage')});
+                });
+            }
+            else {
+                return console.error(err);
+            }
         });
     }
 });

@@ -15,10 +15,22 @@
                 <p style="font-family: Permanent Marker; font-size: 24px;justify-self: center;">Gestion des articles</p>
             </div>
             <div id="print-articles">
-                <% for ( let i = 0; i < articles.length; i++) { %>
-                    <%- include('../../partials/card', {url: "/admin/modifArticle?id=" + articles[i].id, image: articles[i].image, title: articles[i].title, description: articles[i].description}); %>
-                <% } %>
+                    <% for ( let i = 0; i < articles.length; i++) { %>
+                        <div class="article-element">
+                            <%- include('../../partials/card', {url: "/admin/modifArticle?id=" + articles[i].id, image: articles[i].image, title: articles[i].title, description: articles[i].description}); %>
+                            <form action="/admin/manageArticle" method="POST" id="send">
+                                <button name="suppr" type="button" class="button-input bg-bi-orange" onclick="deleteArticle(this)">Supprimer</button>
+                                <input name="id"value="<%= articles[i].id %>" style="display:none;">
+                            </form>
+                        </div>
+                    <% } %>
             </div>
         </section>
     </body>
 </html>
+<script>
+    function deleteArticle(element) {
+        if (confirm("Voulez-vous vraiment supprimer cet article ?")) element.parentElement.submit();
+        else console.log("oui")
+    }
+</script>
