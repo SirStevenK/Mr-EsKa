@@ -62,41 +62,11 @@
 
 #hd-plus .slot
 {
-    margin: 0 auto;
-    border: 3px solid;
-    border-radius: 10px;
-    padding: 10px 0;
     width: 180px;
-    font-family: Acme;
     font-size: 20px;
     color: aliceblue;
-    text-decoration: none;
 }
 
-
-.bg-slot-green
-{
-    background: #0be881;
-    border-color: #05c46b!important;
-}
-
-.bg-slot-red
-{
-    background: #ff5e57;
-    border-color: #ff3f34!important;
-}
-
-.bg-slot-blue
-{
-    background: #4bcffa;
-    border-color: #0fbcf9!important;
-}
-
-.bg-slot-orange
-{
-    background: #ffc048;
-    border-color: #ffa801!important;
-}
 
 #hd-footer {
     flex: 0 0 48px;

@@ -1,0 +1,37 @@
+.button-input:hover
+{
+    cursor: pointer;
+}
+
+.button-input
+{
+    font-size: 20px;
+    text-align: center;
+    padding: 10px 15px;
+    border: 3px solid;
+    border-radius: 10px;
+    font-family: Acme;
+    outline-width: 0;
+    font-weight: bold;
+}
+
+.bg-bi-green
+{
+    background: #78e08f;
+    border-color: #b8e994;
+    border-bottom-color: #38ada9;
+}
+
+.bg-bi-blue
+{
+    background: #4a69bd;
+    border-color: #6a89cc;
+    border-bottom-color: #1e3799;
+}
+
+.bg-bi-orange
+{
+    background: #f6b93b;
+    border-color: #fad390;
+    border-bottom-color: #fa983a;
+}

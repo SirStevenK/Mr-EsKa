@@ -5,7 +5,6 @@
 }
 
 body {
-    /* height: 100vh; */
     background: #17c0eb;
     background: #ffcccc;
     background: linear-gradient(to right, rgb(252, 92, 125), rgb(106, 130, 251));
@@ -21,7 +20,6 @@ body {
 }
 
 #article {
-    /* border: 1px solid black; */
     flex: 1 0 300px;
     margin: 50px 0;
     background: #c8d6e5;

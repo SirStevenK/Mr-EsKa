@@ -1,0 +1,22 @@
+.text-input
+{
+    margin-bottom: 20px;
+}
+
+.text-input label
+{
+    display: block;
+    font-size: 20px;
+    font-family: Acme;
+    margin-bottom: 5px;
+}
+
+.text-input input[type="text"],.text-input input[type="password"]
+{
+    outline-width: 0;
+    font-size: 24px;
+    padding: 10px 20px;
+    border: 1px solid #BBB;
+    border-radius: 20px;
+    font-family: Oswald;
+}
