@@ -22,8 +22,6 @@ function updateVisualizer() {
     contentVisu.innerHTML = contentVisu.innerHTML.replace(/<\/p>/g, '</p>');
     contentVisu.innerHTML = contentVisu.innerHTML.replace(/<u>/g, '<span class="u">');
     contentVisu.innerHTML = contentVisu.innerHTML.replace(/<\/u>/g, '</span>');
-    // contentVisu.innerHTML.replaceAll("<u>", "<span class='u'");
-    // contentVisu.innerHTML.replaceAll("</u>", "</span>");
     SyntaxHighlighter.highlight()
 }
 
