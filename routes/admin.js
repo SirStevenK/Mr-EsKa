@@ -9,37 +9,30 @@ var fs = require('fs');
 var Utilisateur = require('../models/user_model')
 var Image = require("../models/image_model");
 var Article = require("../models/article_model");
-var list_users = []
-
-var db = mongoose.connection;
-
-db.once('open', function() {
-    Utilisateur.find((err, Utilisateurs) => {
-        if (!err) {
-            list_users = Utilisateurs
-        }
-        else {
-            return console.error(err);
-        }
-    });
-});
 
 router.get('/', function(req, res, next) {
     if (req.session.user)
     {
-        currentUser = req.session.user;
-        let stop = false;
-        list_users.forEach((user) => {
-            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
-            {
-                req.session.user = user;
-                res.render('admin/menu');
-                stop = true;
+        Utilisateur.find((err, Utilisateurs) => {
+            if (!err) {
+                let currentUser = req.session.user;
+                let stop = false;
+                Utilisateurs.forEach((user) => {
+                    if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+                    {
+                        req.session.user = user;
+                        res.render('admin/menu');
+                        stop = true;
+                    }
+                });
+                if (!stop) {
+                    res.redirect('/admin');
+                }
+            }
+            else {
+                return console.error(err);
             }
         });
-        if (!stop) {
-            res.redirect('/admin');
-        }
     }
     else res.render('admin/login');
 });
@@ -50,35 +43,49 @@ router.post('/', function(req, res){
     } 
     else 
     {
-        let stop = false;
-        list_users.forEach((user) => {
-            if(user.pseudo === req.body.user && user.password === req.body.pwd && !stop)
-            {
-                req.session.user = user;
-                res.redirect('/admin/menu');
-                stop = true;
+        Utilisateur.find((err, Utilisateurs) => {
+            if (!err) {
+                let stop = false;
+                Utilisateurs.forEach((user) => {
+                    if(user.pseudo === req.body.user && user.password === req.body.pwd && !stop)
+                    {
+                        req.session.user = user;
+                        res.redirect('/admin/menu');
+                        stop = true;
+                    }
+                });
+                if (!stop) res.render('admin/login');
+            }
+            else {
+                return console.error(err);
             }
         });
-        if (!stop) res.render('admin/login');
     }
 });
 
 router.get('/menu', function(req, res, next) {
     if (req.session.user)
     {
-        currentUser = req.session.user;
-        let stop = false;
-        list_users.forEach((user) => {
-            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
-            {
-                req.session.user = user;
-                res.render('admin/menu');
-                stop = true;
+        Utilisateur.find((err, Utilisateurs) => {
+            if (!err) {
+                let currentUser = req.session.user;
+                let stop = false;
+                Utilisateurs.forEach((user) => {
+                    if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+                    {
+                        req.session.user = user;
+                        res.render('admin/menu');
+                        stop = true;
+                    }
+                });
+                if (!stop) {
+                    res.redirect('/admin');
+                }
+            }
+            else {
+                return console.error(err);
             }
         });
-        if (!stop) {
-            res.redirect('/admin');
-        }
     }
     else res.redirect('/admin');
 });
@@ -86,19 +93,26 @@ router.get('/menu', function(req, res, next) {
 router.get('/postArticle', function(req, res, next) {
     if (req.session.user)
     {
-        currentUser = req.session.user;
-        let stop = false;
-        list_users.forEach((user) => {
-            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
-            {
-                req.session.user = user;
-                res.render("admin/postArticle", {title: "", type: "", description: "", url: "articles/", image: "", content: "", action: "/admin/postArticle"} );
-                stop = true;
+        Utilisateur.find((err, Utilisateurs) => {
+            if (!err) {
+                let currentUser = req.session.user;
+                let stop = false;
+                Utilisateurs.forEach((user) => {
+                    if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+                    {
+                        req.session.user = user;
+                        res.render("admin/postArticle", {title: "", type: "", description: "", url: "articles/", image: "", content: "", action: "/admin/postArticle"} );
+                        stop = true;
+                    }
+                });
+                if (!stop) {
+                    res.redirect('/admin');
+                }
+            }
+            else {
+                return console.error(err);
             }
         });
-        if (!stop) {
-            res.redirect('/admin');
-        }
     }
     else res.redirect('/admin');
 });
@@ -136,19 +150,26 @@ router.post('/postArticle', function(req, res)
 router.get('/postImage', function(req, res, next) {
     if (req.session.user)
     {
-        currentUser = req.session.user;
-        let stop = false;
-        list_users.forEach((user) => {
-            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
-            {
-                req.session.user = user;
-                res.render('admin/postImage', {script: ""});
-                stop = true;
+        Utilisateur.find((err, Utilisateurs) => {
+            if (!err) {
+                let currentUser = req.session.user;
+                let stop = false;
+                Utilisateurs.forEach((user) => {
+                    if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+                    {
+                        req.session.user = user;
+                        res.render('admin/postImage', {script: ""});
+                        stop = true;
+                    }
+                });
+                if (!stop) {
+                    res.redirect('/admin');
+                }
+            }
+            else {
+                return console.error(err);
             }
         });
-        if (!stop) {
-            res.redirect('/admin');
-        }
     }
     else res.redirect('/admin');
 });
@@ -187,26 +208,33 @@ router.post('/postImage', upload.single('image'), function(req, res, next){
 router.get('/manageArticle', function(req, res, next) {
     if (req.session.user)
     {
-        currentUser = req.session.user;
-        let stop = false;
-        list_users.forEach((user) => {
-            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
-            {
-                req.session.user = user;
-                Article.find((err, Articles) => {
-                    if (!err) {
-                        res.render('admin/manageArticle', {articles: Articles.reverse()});
-                    }
-                    else {
-                        return console.error(err);
+        Utilisateur.find((err, Utilisateurs) => {
+            if (!err) {
+                let currentUser = req.session.user;
+                let stop = false;
+                Utilisateurs.forEach((user) => {
+                    if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+                    {
+                        req.session.user = user;
+                        Article.find((err, Articles) => {
+                            if (!err) {
+                                res.render('admin/manageArticle', {articles: Articles.reverse()});
+                            }
+                            else {
+                                return console.error(err);
+                            }
+                        });
+                        stop = true;
                     }
                 });
-                stop = true;
+                if (!stop) {
+                    res.redirect('/admin');
+                }
+            }
+            else {
+                return console.error(err);
             }
         });
-        if (!stop) {
-            res.redirect('/admin');
-        }
     }
     else res.redirect('/admin');
 });
@@ -227,26 +255,33 @@ router.post('/manageArticle', function(req, res)
 router.get('/manageImage', function(req, res, next) {
     if (req.session.user)
     {
-        currentUser = req.session.user;
-        let stop = false;
-        list_users.forEach((user) => {
-            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
-            {
-                req.session.user = user;
-                Image.find((err, Images) => {
-                    if (!err) {
-                        res.render('admin/manageImage', {images: Images.reverse(), script: ""});
-                    }
-                    else {
-                        return console.error(err);
+        Utilisateur.find((err, Utilisateurs) => {
+            if (!err) {
+                let currentUser = req.session.user;
+                let stop = false;
+                Utilisateurs.forEach((user) => {
+                    if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+                    {
+                        req.session.user = user;
+                        Image.find((err, Images) => {
+                            if (!err) {
+                                res.render('admin/manageImage', {images: Images.reverse(), script: ""});
+                            }
+                            else {
+                                return console.error(err);
+                            }
+                        });
+                        stop = true;
                     }
                 });
-                stop = true;
+                if (!stop) {
+                    res.redirect('/admin');
+                }
+            }
+            else {
+                return console.error(err);
             }
         });
-        if (!stop) {
-            res.redirect('/admin');
-        }
     }
     else res.redirect('/admin');
 });
@@ -256,6 +291,8 @@ router.post('/manageImage', function(req, res)
     const url = req.body.url;
     const newUrl = req.body.newUrl;
     const requete = req.body.request;
+    const name = url.substring(url.lastIndexOf("/") + 1);
+    const newName = newUrl.substring(newUrl.lastIndexOf("/") + 1);
 
     if (requete == "Valider") 
     {
@@ -263,9 +300,9 @@ router.post('/manageImage', function(req, res)
             if (!err) {
                 if (Images.every(e => e.url != newUrl))
                 {
-                    fs.rename(__dirname + "/../public/images/" + url.substring(url.lastIndexOf("/") + 1), __dirname + "/../public/images/" + newUrl.substring(newUrl.lastIndexOf("/") + 1), function (err) {
+                    fs.rename(__dirname + "/../public/images/" + name, __dirname + "/../public/images/" + newName, function (err) {
                         if (err) return res.send(err);
-                        Image.findOneAndUpdate({url : url}, {name: newUrl.substring(newUrl.lastIndexOf("/") + 1), url: newUrl}, () => {
+                        Image.findOneAndUpdate({url : url}, {name: newName, url: newUrl}, () => {
                             Image.find((err, Images) => {
                                 if (!err) res.render("admin/manageImage", {images: Images.reverse(), script: 'alert("L\'image a bien été modifié");'});
                                 else return console.error(err);
@@ -284,7 +321,7 @@ router.post('/manageImage', function(req, res)
     {
         Image.find((err, Images) => {
             if (!err) {
-                fs.unlink(__dirname + "/../public/images/" + url.substring(url.lastIndexOf("/") + 1), (err) => {
+                fs.unlink(__dirname + "/../public/images/" + name, (err) => {
                     if (err) return res.send(err);
                     Image.findOneAndDelete({url : url}, () => {res.redirect('/admin/manageImage')});
                 });
@@ -299,24 +336,31 @@ router.post('/manageImage', function(req, res)
 router.get('/modifArticle', function(req, res) {
     if (req.session.user)
     {
-        currentUser = req.session.user;
-        let stop = false;
-        list_users.forEach((user) => {
-            if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
-            {
-                req.session.user = user;
-                Article.findById(req.query.id, function (err, article) {
-                    if (!err) {
-                        res.render("admin/postArticle", {title: article.title, type: article.type, description: article.description, url: article.url, image: article.image, content: article.content, action: "/admin/modifArticle?id=" + req.query.id} );
+        Utilisateur.find((err, Utilisateurs) => {
+            if (!err) {
+                let currentUser = req.session.user;
+                let stop = false;
+                Utilisateurs.forEach((user) => {
+                    if (user.pseudo === currentUser.pseudo && user.password === currentUser.password && !stop)
+                    {
+                        req.session.user = user;
+                        Article.findById(req.query.id, function (err, article) {
+                            if (!err) {
+                                res.render("admin/postArticle", {title: article.title, type: article.type, description: article.description, url: article.url, image: article.image, content: article.content, action: "/admin/modifArticle?id=" + req.query.id} );
+                            }
+                            else return console.log(err);
+                        });
+                        stop = true;
                     }
-                    else return console.log(err);
                 });
-                stop = true;
+                if (!stop) {
+                    res.redirect('/admin');
+                }
+            }
+            else {
+                return console.error(err);
             }
         });
-        if (!stop) {
-            res.redirect('/admin');
-        }
     }
     else res.redirect('/admin');
 });
