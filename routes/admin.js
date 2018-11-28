@@ -38,7 +38,6 @@ router.get('/', function(req, res, next) {
             }
         });
         if (!stop) {
-            console.log("oui")
             res.redirect('/admin');
         }
     }
@@ -78,7 +77,6 @@ router.get('/menu', function(req, res, next) {
             }
         });
         if (!stop) {
-            console.log("oui")
             res.redirect('/admin');
         }
     }
@@ -107,7 +105,6 @@ router.get('/postArticle', function(req, res, next) {
 
 router.post('/postArticle', function(req, res)
 {    
-    console.log(req.body)
     const title = req.body.Title;
     const url = req.body.UrlArticle;
     const image = req.body.ImagePrincipale;
@@ -116,7 +113,6 @@ router.post('/postArticle', function(req, res)
     const content = req.body.Contenu;
 
     if(title == "" || content == "" || url == "articles/" || image == "" || description == "" || type == ""){
-    //    res.render('admin/postImage', {script: 'alert("Le nom de l\'image est déjà pris");'});
         res.render("admin/postArticle", {title: title, type: type, description: description, url: url, image: image, content: content, action: "/admin/postArticle"} );
     } 
     else 
@@ -178,7 +174,6 @@ router.post('/postImage', upload.single('image'), function(req, res, next){
                             if (err) return res.json(err);
                             res.render('admin/postImage', {script: 'alert("L\'image ' + name + ' a bien été créée !");'});
                         });
-                        // res.send('renamed complete');
                      }
                  });
              }
@@ -328,7 +323,6 @@ router.get('/modifArticle', function(req, res) {
 
 router.post('/modifArticle', function(req, res)
 {    
-    console.log(req.body)
     const title = req.body.Title;
     const url = req.body.UrlArticle;
     const image = req.body.ImagePrincipale;

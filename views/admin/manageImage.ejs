@@ -19,9 +19,9 @@
                 <input id="url" type="text" name="url" style="display:none" form="send">
             </div>
             <div id="ov-bot">
-                <form action="/admin/manageImage" method="POST" id="send">
-                    <input class="button-input bg-bi-orange" name="request" type="submit" value="Supprimer">
-                    <input class="button-input bg-bi-green" name="request" type="submit" value="Valider">
+                <form action="/admin/manageImage" method="POST" id="send" onsubmit="return confirm(textConfirm);">
+                    <input class="button-input bg-bi-orange" name="request" type="submit" value="Supprimer" onclick="deleteImage()">
+                    <input class="button-input bg-bi-green" name="request" type="submit" value="Valider" onclick="modifImage()">
                 </form>
             </div>
         </div>
@@ -40,5 +40,12 @@
     </body>
 </html>
 <script>
+    var textConfirm = ""
     <%- script -%>
+    function deleteImage() {
+        textConfirm = "Voulez-vous vraiment supprimer cette image ?";
+    }
+    function modifImage() {
+        textConfirm = "Voulez-vous vraiment modifier cette image ?";
+    }
 </script>
