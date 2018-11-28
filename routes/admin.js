@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var ejs = require('ejs')
 var multer = require('multer');
 var upload = multer({ dest: __dirname + '/../tmp/my-uploads/' });
 var fs = require('fs');
