@@ -22,7 +22,8 @@ function updateVisualizer() {
     contentVisu.innerHTML = contentVisu.innerHTML.replace(/<\/p>/g, '</p>');
     contentVisu.innerHTML = contentVisu.innerHTML.replace(/<u>/g, '<span class="u">');
     contentVisu.innerHTML = contentVisu.innerHTML.replace(/<\/u>/g, '</span>');
-    SyntaxHighlighter.highlight()
+    // SyntaxHighlighter.highlight()
+    PR.prettyPrint()
 }
 
 function validUrlImage() {

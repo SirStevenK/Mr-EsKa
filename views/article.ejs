@@ -5,17 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title><%= title %> - Mr. EsKa</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script type="text/javascript" src="/javascripts/shCore.js"></script>
-        <script type="text/javascript" src="/javascripts/shBrushJScript.js"></script>
-        <script type="text/javascript" src="/javascripts/shBrushPython.js"></script>
-        <link href="/stylesheets/shCore.css" rel="stylesheet" type="text/css" />
-        <link href="/stylesheets/shThemeDefault.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/skins/tomorrow-night-blue.min.css">
         <link href="https://fonts.googleapis.com/css?family=Acme|Oswald|Permanent+Marker" rel="stylesheet">
         <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/decor.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/header.css" /> 
         <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/article.css" /> 
     </head>
-    <body>
+    <body onload="PR.prettyPrint()">
         <section id="main">
             <%- include ../partials/header -%>
             <div id="article">
@@ -28,6 +25,3 @@
         </section>
     </body>
 </html>
-<script type="text/javascript">
-     SyntaxHighlighter.all()
-</script>

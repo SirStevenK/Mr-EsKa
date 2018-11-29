@@ -5,12 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Post Article - Mr. EsKa</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script type="text/javascript" src="/javascripts/shCore.js"></script>
+        <!-- <script type="text/javascript" src="/javascripts/shCore.js"></script>
         <script type="text/javascript" src="/javascripts/shBrushJScript.js"></script>
-        <script type="text/javascript" src="/javascripts/shBrushPython.js"></script>
+        <script type="text/javascript" src="/javascripts/shBrushPython.js"></script> 
+        
         <link href="/stylesheets/shCore.css" rel="stylesheet" type="text/css" />
-        <link href="/stylesheets/shThemeDefault.css" rel="stylesheet" type="text/css" />
+        <link href="/stylesheets/shThemeDefault.css" rel="stylesheet" type="text/css" /> -->
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Acme|Oswald|Permanent+Marker" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/skins/tomorrow-night-blue.min.css">
         <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/input.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/button.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/postArticle.css" />
@@ -66,7 +69,7 @@
                     <input class="small-top-btn" type="button" name="bold" value="B" onclick="modifSelect('<b>', '</b>')">
                     <input class="small-top-btn" type="button" name="bold" value="I" onclick="modifSelect('<i>', '</i>')">
                     <input class="small-top-btn" type="button" name="bold" value="U" onclick="modifSelect('<u>', '</u>')">
-                    <input class="small-top-btn" type="button" name="bold" value="Code" onclick="modifSelect('<pre class=\'brush: js\'>', '</pre>')">
+                    <input class="small-top-btn" type="button" name="bold" value="Code" onclick="modifSelect('<?prettify lang-js  ?><pre class=\'prettyprint\'>', '</pre>')">
                 </div>
                 <div>
                     <input class="small-top-btn" type="button" name="bold" value="Config" onclick="toggleEdit()">
